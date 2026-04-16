@@ -13,10 +13,10 @@ const SigninPage = () => {
 
         const credentials = {email, password}
 
-        axios.post('https://node-class-xg4u.onrender.com/user/login', credentials)
+        axios.post('http://localhost:5555/user/login', credentials)
             .then(response => {
                 alert('Login successful')
-                console.log(response.data.firstName)
+                console.log(response.data.user.firstName)
                 navigate('/dashboard')
             })
             .catch(error => {

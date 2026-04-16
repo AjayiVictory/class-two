@@ -17,7 +17,7 @@ const SignupPage = () => {
         },
         onSubmit: (values) => {
             console.log(values)
-            axios.post('https://node-class-xg4u.onrender.com/user/register', values)
+            axios.post('http://localhost:5555/user/register', values)
                 .then(response => {
                     alert('Form submitted successfully')
                     navigate('/login')
