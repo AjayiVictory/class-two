@@ -16,10 +16,11 @@ const SignupPage = () => {
             password: ''
         },
         onSubmit: (values) => {
+            // alert("You have submitted")
             console.log(values)
             axios.post('http://localhost:5555/user/register', values)
                 .then(response => {
-                    alert('Form submitted successfully')
+                    // alert('Form submitted successfully')
                     navigate('/login')
                 })
                 .catch(error => {
@@ -38,7 +39,7 @@ const SignupPage = () => {
   return (
     <>
     <h1>Signup Page</h1>
-    <form>
+    <form onSubmit={formik.handleSubmit}>
         <input className="d-block mb-1"
             type="text"
             name="firstName"
@@ -75,7 +76,7 @@ const SignupPage = () => {
         />
         {formik.touched.password && formik.errors.password ? <p className="text-danger fs-6">{formik.errors.password}</p> : ""}
 
-        <button type="submit" onClick={formik.handleSubmit}>Sign Up</button>
+        <button type="submit" >Sign Up</button>
     </form>
     </>
   )

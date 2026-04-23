@@ -1,29 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
-  const [allUsers, setallUsers] = useState([])
 
-    axios.get('http://localhost:5555/user/registeredUsers')
-    // .then(res => res.json())
-      .then(result => {
-        // console.log(result.data.users)
-        setallUsers(result.data.users)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+   let navigate = useNavigate()
+    useEffect(() => {
+        let token = localStorage.token
+        
+        let url = "http://localhost:5555/user/dashboard"
+        axios.get(url,{
+            headers:{
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{
+            if(err.response && err.response.status === 401){
+                localStorage.removeItem('token')
+                navigate("/login")
+            }
+            console.error("Error:",err.response?err.response.data:err);
+        })
+    }, [navigate])
+
 
   return (
     <>
-    {allUsers.map(user => (
+
       <div>
-        <p>Firstname: {user.firstName}</p>
-        <p>Lastname: {user.lastName}</p>
-        <p>Email: {user.email}</p>
+        <h1>Welocme to dashboard</h1>
       </div>
         
-    ))}
     </>
 
   )

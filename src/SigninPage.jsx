@@ -15,14 +15,19 @@ const SigninPage = () => {
 
         axios.post('http://localhost:5555/user/login', credentials)
             .then(response => {
-                alert('Login successful')
-                console.log(response.data.user.firstName)
-                navigate('/dashboard')
+               if (response.data.message === "Login Successful") {
+                    alert("Welcome back!");
+                    localStorage.token = response.data.user.token
+                    // Redirect only when confirmed
+                    navigate("/dashboard");
+                } else {
+                    alert(response.data.message || "Invalid credentials");
+                }
             })
-            .catch(error => {
-                console.error('Error logging in:', error)
-                alert('Login failed')
-            })
+            .catch((err) => {
+                console.error("Error:", err.response ? err.response.data : err);
+                alert("Login failed. Please check your email or password.");
+            });
     }
 
 
